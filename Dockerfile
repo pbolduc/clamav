@@ -28,6 +28,9 @@ COPY clamdcheck.sh /opt/app-root
 RUN chown -R 1001:0 /opt/app-root/clamdcheck.sh
 RUN chmod ug+rx /opt/app-root/clamdcheck.sh
 
+RUN chown -R 1001:0 /var/lib/clamav
+RUN chmod ug+rx /var/lib/clamav
+
 # # To fix check permissions error for clamAV
 RUN mkdir /var/log/clamav
 #RUN touch /var/log/clamav/clamav.log
