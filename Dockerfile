@@ -19,23 +19,25 @@ RUN yum install -y wget
 COPY config/clamd.conf /etc/clamd.conf
 COPY config/freshclam.conf /etc/freshclam.conf
 
-RUN mkdir /opt/app-root
-RUN mkdir /opt/app-root/src
+RUN mkdir -p /opt/app-root/src
 RUN chown -R 1001:0 /opt/app-root/src
 RUN chmod -R ug+rwx /opt/app-root/src
 
 # copy health check script to app-root 
 COPY clamdcheck.sh /opt/app-root
-RUN chmod ug+rwx /opt/app-root/clamdcheck.sh
+RUN chown -R 1001:0 /opt/app-root/clamdcheck.sh
+RUN chmod ug+rx /opt/app-root/clamdcheck.sh
 
 # # To fix check permissions error for clamAV
 RUN mkdir /var/log/clamav
-RUN touch /var/log/clamav/clamav.log
-RUN touch /var/log/clamav/freshclam.log
+#RUN touch /var/log/clamav/clamav.log
+#RUN touch /var/log/clamav/freshclam.log
 RUN chown -R 1001:0 /var/log/clamav
-RUN chmod -R ug+rwx /var/log/clamav
+RUN chmod -R ug+rxw /var/log/clamav
 
-RUN chown -R 1001:0 /opt/app-root/src
+RUN mkdir -p /run/clamav
+RUN chown -R 1001:0 /run/clamav
+RUN chmod -R ug+rxw /run/clamav
 
 USER 1001
 
